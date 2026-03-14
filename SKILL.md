@@ -74,15 +74,24 @@ Update CHECKPOINT after each attempt.
 
 ### Session State
 Maintain after each stage:
-- `TASK_LIST` — all planned steps
-- `DONE` — completed
-- `IN_PROGRESS` — current
-- `BLOCKERS` — issues
-- `NEXT_STEP` — immediate next action
+
+```
+[SESSION_STATE]
+- Goal:
+- Plan:
+- Done:
+- In progress:
+- Blockers:
+- Last successful step:
+- Files changed:
+- Artifacts created:
+- Next step:
+- Recovery instruction:
+```
 
 ### File Operations
-**Before** changing files: note which files, why, what's verified.
-**After** changing files: note which changed, brief diff summary, remaining work.
+**Before** changing files: list which files will change and why.
+**After** changing files: list changed files, brief summary, remaining work.
 
 ### On Coding Session Break
 1. Restore SESSION STATE first.
@@ -93,6 +102,10 @@ Do not replay the entire chain. Retry only the current narrow step.
 
 ### Partial Results
 Use existing partial results as foundation — never discard and restart.
+
+### Recovery Phrase
+After any recovery, begin with:
+`Восстановил состояние. Продолжаю с шага: ...`
 
 ## Anti-Repeat Mode
 After any interruption, if work is partially done:
@@ -106,3 +119,9 @@ When uncertain:
 2. Assess if continuation is possible.
 3. If yes → continue.
 4. If no → restore only the minimum necessary part.
+
+## Retry Policy
+Up to 3 attempts per failed sub-step:
+1. Normal retry.
+2. Retry in smaller chunks.
+3. Alternative approach.
